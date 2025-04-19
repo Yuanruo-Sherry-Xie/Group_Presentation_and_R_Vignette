@@ -70,15 +70,17 @@ Below is a detailed rationale for **why and when dimensionality reduction is use
 
 ## How it works
 
-## Step 1 - Data normalization
+![](https://media.datacamp.com/legacy/image/upload/v1676290161/5_main_steps_for_computing_principal_components_7aa5efa2ad.png){width="410"}
 
-## Step 2 - Covariance matrix
+### Step 1 - Data normalization
 
-## Step 3 - Eigenvectors and eigenvalues
+### Step 2 - Covariance matrix
 
-## Step 4 - Selection of principal components
+### Step 3 - Eigenvectors and eigenvalues
 
-## Step 5 - Data transformation in new dimensional space
+### Step 4 - Selection of principal components
+
+### Step 5 - Data transformation in new dimensional space
 
 ## **Summary**
 
