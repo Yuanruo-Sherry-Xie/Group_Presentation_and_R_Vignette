@@ -9,22 +9,85 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+# **Why Dimensionality Reduction?**
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Dimensionality reduction is a foundational technique in data science, bioinformatics, and biological anthropology that transforms complex, high-dimensional datasets into simpler, lower-dimensional representations—**without losing the core structure or meaning of the data**. This is achieved by creating new variables (dimensions) that capture the most important variation from the original features.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+It is not only a mathematical tool but also a **practical necessity** when working with multivariate data such as:
 
-```{r cars}
-summary(cars)
-```
+-   Skeletal measurements
 
-## Including Plots
+-   Facial landmark coordinates
 
-You can also embed plots, for example:
+-   Gene expression profiles
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+-   High-resolution image or sensor data
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Below is a detailed rationale for **why and when dimensionality reduction is used**:
+
+1.  Cognitive and Interpretive Simplicity
+    -   Human perception is limited—we can only visualize and intuitively interpret up to 3 dimensions. Dimensionality reduction techniques like PCA, t-SNE, and UMAP allow complex, multidimensional patterns to be projected into 2D or 3D, enabling clearer pattern recognition, cluster detection, and insightful storytelling.
+2.  Computational Efficiency
+    -   High-dimensional data is expensive to store, process, and analyze. Algorithms slow down and can become unstable in large feature spaces due to what's known as the **curse of dimensionality**. Reducing dimensions leads to:
+
+        -   Faster computation
+
+        -   Less memory usage
+
+        -   Smoother model convergence
+
+        This is especially important in real-time systems or large-scale analyses (e.g., clustering thousands of skeletal scans).
+3.  Noise and Redundancy Reduction
+    -   Many datasets contain **irrelevant, noisy, or correlated features**. Dimensionality reduction removes redundancy and compresses features into a set of **uncorrelated principal components** or **embedding coordinates**.
+
+    -   This boosts the **signal-to-noise ratio**, improves model performance, and reduces overfitting by focusing on what truly matters.
+4.  Better Model Performance and Generalization
+    -   By discarding irrelevant or misleading variables, dimensionality reduction helps machine learning models:
+
+        -   Generalize better to new data
+
+        -   Avoid overfitting
+
+        -   Perform well with fewer features
+
+        Derived features—like PC1 and PC2—can also be used as inputs for supervised learning or clustering
+5.  Visualization and Communication
+    -   Visualization is a cornerstone of exploratory data analysis. Dimensionality reduction allows for the **plotting of complex data** in 2D or 3D to:
+
+        -   Detect clusters or groupings
+
+        -   Find outliers or rare variants
+
+        -   Communicate patterns effectively in presentations or publications
+
+        For example, t-SNE can reveal subgroupings in chimpanzee vocalization patterns, or UMAP can show clusters of gene expression in skeletal tissue types.
+
+# **Principal Component Analysis (PCA)**
+
+## Introduction
+
+## Why PCA?
+
+## How it works
+
+## Step 1 - Data normalization
+
+## Step 2 - Covariance matrix
+
+## Step 3 - Eigenvectors and eigenvalues
+
+## Step 4 - Selection of principal components
+
+## Step 5 - Data transformation in new dimensional space
+
+## **Summary**
+
+|                     |                          |
+|---------------------|--------------------------|
+| **Feature**         | **PCA**                  |
+| Type                | Linear                   |
+| Preserves           | Global structure         |
+| Axis Interpretation | Easy (e.g., size, shape) |
+| Clustering          | Limited                  |
+| Speed               | Fast                     |
+| Use Case            | Morphometrics, trends    |

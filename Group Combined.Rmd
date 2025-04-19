@@ -5,6 +5,8 @@ date: "2025-04-19"
 output: html_document
 ---
 
+# "Seeing Structure in the Chaos: Choosing the Right Dimension Reduction Method"
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
