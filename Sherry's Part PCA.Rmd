@@ -66,21 +66,65 @@ Below is a detailed rationale for **why and when dimensionality reduction is use
 
 ## Introduction
 
+The main purpose of the project is to present and implement unsupervised learning methods for **Principal Component Analysis (PCA)** - a statistical method to reduce dimensionality. PCA is used to extract significant information from a multivariate data table and to express this information as a set of few new variables called principal components. The goal of PCA is to identify directions that can be visualized graphically with minimal loss of information.
+
 ## Why PCA?
+
+### ✅ **What it does well:**
+
+-   Captures the most variance with the fewest components
+
+-   Reveals **global structure** in your data
+
+-   Creates **interpretable axes** (often size, shape, etc.)
+
+-   Quick and easy to run
+
+### ❌ **What it doesn't do:**
+
+-   Doesn’t preserve **local relationships** (nearby points in high-D space may not stay close)
+
+-   Can miss **nonlinear structure** (like clusters in curved shapes)
+
+### The following assumptions are made by the principal component analysis:
+
+-   ﻿﻿There is a linear combination between variables.
+
+-   ﻿﻿It assumes that the principal components having the highest variance are more important than those which don't, and consider them to include noise in the data.
+
+-   ﻿﻿More outliers in the data include experimental errors.
+
+ ﻿﻿The data set from the PCA gives a great representation of the original data.
 
 ## How it works
 
-![](https://media.datacamp.com/legacy/image/upload/v1676290161/5_main_steps_for_computing_principal_components_7aa5efa2ad.png){width="410"}
+![](https://media.datacamp.com/legacy/image/upload/v1676290161/5_main_steps_for_computing_principal_components_7aa5efa2ad.png){width="663"}
+
+[Source](https://www.datacamp.com/tutorial/pca-analysis-r)
 
 ### Step 1 - Data normalization
 
+Information has different scales and performing PCA using such data will lead to a biased result. This is where data normalization comes in. It ensures that each attribute has the same level of contribution, preventing one variable from dominating others. For each variable, normalization is done by subtracting its mean and dividing by its standard deviation.
+
 ### Step 2 - Covariance matrix
+
+As the same suggests, this step is about computing the **covariance matrix** from the normalized data. This is a symmetric matrix, and each element (i, j) corresponds to the covariance between variables i and j.
 
 ### Step 3 - Eigenvectors and eigenvalues
 
+Geometrically, an **eigenvector** represents a direction such as “vertical” or “90 degrees”. An **eigenvalue**, on the other hand, is a number representing the amount of variance present in the data for a given direction. Each  eigenvector has its corresponding eigenvalue. 
+
 ### Step 4 - Selection of principal components
 
+There are as many pairs of eigenvectors and eigenvalues as the number of variables in the data. In the data with only monthly expenses, age, and rate, there will be three pairs. Not all the pairs are relevant. So, the eigenvector with the highest eigenvalue corresponds to the first principal component. The second principal component is the eigenvector with the second highest eigenvalue, and so on.
+
 ### Step 5 - Data transformation in new dimensional space
+
+This step involves re-orienting the original data onto a new subspace defined by the principal components This reorientation is done by multiplying the original data by the previously computed eigenvectors.
+
+It is important to remember that this transformation does not modify the original data itself but instead provides a new perspective to better represent the data. 
+
+## **Real-World Example of PCA in R**
 
 ## **Summary**
 
