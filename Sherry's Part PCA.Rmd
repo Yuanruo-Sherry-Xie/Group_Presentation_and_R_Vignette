@@ -126,7 +126,77 @@ It is important to remember that this transformation does not modify the origina
 
 ## **Real-World Example of PCA in R**
 
-## **Summary**
+#
+
+### 1. Set Up
+
+```{r}
+library("ggplot2")
+library("ggfortify")
+library("gridExtra")
+library("carData")
+library("car")
+library("factoextra")
+library("corrplot")
+```
+
+### 2. Explore Data
+
+Now it is possible to load demo dataset *decathlon2* from the *factoextra* package. The data describes athletes’ performance during two sporting events (Desctar and OlympicG). It contains 27 individuals (athletes) described by 13 variables (sport disciplines). For further analysis, I will subset active individuals (rows 1:23) and active variables (columns 1:10) from *decathlon2* dataset, therefore I will create new dataset *decathlon2.active* to conduct the principal component analysis. *Decathlon2.active* dataset consists of 23 observations and 10 variables (presented below).
+
+```{r}
+data(decathlon2)
+decathlon2.active <- decathlon2[1:23, 1:10]
+head(decathlon2.active)
+```
+
+In order to provide the model, a summary of data is required. The variables (sport disciplines) descriptions are as follows: X100m - 100 metres results expressed in seconds Long.jump - long jump results expressed in metres Shot.put - shot put results expressed in metres High.jump - high jump results expressed in metres X400m - 400 metres results expressed in seconds X110m.hurdle - 110 metres hurdle race results expressed in seconds Discus - discus throw results expressed in metres Pole.vault - pole vault results expressed in metres Javeline - javeline throw results expressed in metres X1500m - 1500 metres results expressed in seconds
+
+The summary statistics and histograms below show the distribution of observations in all numeric variables. Horizontal axis represents the values of observations, while the vertical axis “count” shows the amount of certain observations for each value.
+
+```{r}
+summary(decathlon2.active)
+```
+
+### 3. Normalize data and covariance matrix
+
+The first step of the analysis is focused around computation of PCA using prcomp() function. This command allows for: centering data around 0 by shifting the variables; rescaling the variance to 1 unit; data standarization needed due to the fact that variables are measured in different scales. Additionally, the eigenvalues are extracted by get_eigenvalue() function. Eigenvalues measure the amount of variation held by each principal component (PC). They are evaluated to determine the number of principal components to be considered.
+
+```{r}
+res.pca <- prcomp(decathlon2.active, scale = TRUE)
+print(res.pca)
+```
+
+```{r}
+summary(res.pca)
+
+```
+
+### 4. Eigenvectors and eigenvalues
+
+```{r}
+eig.val<-get_eigenvalue(res.pca)
+eig.val
+```
+
+```{r}
+fviz_eig(res.pca, col.var="blue")
+
+```
+
+On the basis of importance of components, is it visible that first two PCs have the highest vales for proportion of variance. This statement is also proved by eigenvalues measure. They are large for the first PCs and small for the subsequent PCs, which means that the first PCs corresponds to the directions with the maximum amount of variation in the data set. The sum of all the eigenvalues gives a total variance of 10. As far as scatter plot is concerned, first eigenvalue explain 41.24% of the variation, second - 18.385%. Therefore, 59.627% of the variation is explained by the first two eigenvalues together, which is a proper indicator for further analysis.
+
+# NEED TO WORK ON FROM HERE
+
+### Step 4 - Selection of principal components
+
+### Step 5 - Data transformation in new dimensional space
+
+### 4. Apply PCA
+
+### 5. Visualization of the principal components
+
+*Summary**
 
 |                     |                          |
 |---------------------|--------------------------|
