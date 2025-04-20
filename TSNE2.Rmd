@@ -32,8 +32,17 @@ fun_cereals <- c(
 
 
 shredded_wheat_cereals <- c(
-"Grape-Nuts", "Great_Grains_Pecan", "Just_Right_Fruit_&_Nut", "100%_Bran", "100%_Natural_Bran", "All-Bran", "All-Bran_with_Extra_Fiber", "Almond_Delight", "Basic_4", "Bran_Chex", "Bran_Flakes", "Cheerios", "Shredded_Wheat_spoon_size", "Cream_of_Wheat_(Quick)", "Crispix", "Crispy_Wheat_&_Raisins", "Fruit_&_Fibre_Dates,_Walnuts,_and_Oats", "Fruitful_Bran", "Life", "Maypo", "Muesli_Raisins,_Dates,_&_Almonds", "Muesli_Raisins,_Peaches,_&_Pecans", "Mueslix_Crispy_Blend", "Multi-Grain_Cheerios","Nutri-Grain_Almond-Raisin", "Post_Nat._Raisin_Bran","Product_19", "Quaker_Oat_Squares", "Quaker_Oatmeal","Raisin_Bran", "Raisin_Nut_Bran","Raisin_Squares", "Shredded_Wheat","Total_Raisin_Bran", "Shredded_Wheat_'n'Bran", "Shredded_Wheat_spoon_size", "Special_K", "Total_Whole_Grain"
+  "100%_Bran", "100%_Natural_Bran", "All-Bran", "All-Bran_with_Extra_Fiber",
+  "Bran_Chex", "Bran_Flakes", "Cream_of_Wheat_(Quick)",
+  "Crispy_Wheat_&_Raisins", "Fruit_&_Fibre_Dates,_Walnuts,_and_Oats",
+  "Great_Grains_Pecan", "Muesli_Raisins,_Dates,_&_Almonds",
+  "Muesli_Raisins,_Peaches,_&_Pecans", "Mueslix_Crispy_Blend",
+  "Multi-Grain_Cheerios", "Nutri-Grain_Almond-Raisin",
+  "Quaker_Oat_Squares", "Quaker_Oatmeal", "Raisin_Squares",
+  "Shredded_Wheat", "Shredded_Wheat_'n'Bran",
+  "Shredded_Wheat_spoon_size"
 )
+
 
 cereals_num_sub <- match(
   c(fun_cereals, shredded_wheat_cereals),
