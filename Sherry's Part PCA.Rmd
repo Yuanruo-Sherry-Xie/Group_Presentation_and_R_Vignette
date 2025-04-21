@@ -70,6 +70,8 @@ Below is a detailed rationale for **why and when dimensionality reduction is use
 
 The main purpose of the project is to present and implement unsupervised learning methods for **Principal Component Analysis (PCA)** - a statistical method to reduce dimensionality. PCA is used to extract significant information from a multivariate data table and to express this information as a set of few new variables called principal components. The goal of PCA is to identify directions that can be visualized graphically with minimal loss of information.
 
+![](Screenshot 2025-04-21 at 12.22.19 AM.png)
+
 ## Why PCA?
 
 ### **What it does well:**
@@ -88,6 +90,8 @@ The main purpose of the project is to present and implement unsupervised learnin
 
 -   Can miss **nonlinear structure** (like clusters in curved shapes)
 
+![](Screenshot 2025-04-21 at 12.23.43 AM.png){width="681"}
+
 ### The following assumptions are made by the principal component analysis:
 
 -   ﻿﻿There is a linear combination between variables.
@@ -100,7 +104,7 @@ The main purpose of the project is to present and implement unsupervised learnin
 
 ## How it works
 
-![](https://media.datacamp.com/legacy/image/upload/v1676290161/5_main_steps_for_computing_principal_components_7aa5efa2ad.png){width="663"}
+![](https://media.datacamp.com/legacy/image/upload/v1676290161/5_main_steps_for_computing_principal_components_7aa5efa2ad.png){width="735"}
 
 [Source](https://www.datacamp.com/tutorial/pca-analysis-r)
 
@@ -127,8 +131,6 @@ This step involves re-orienting the original data onto a new subspace defined by
 It is important to remember that this transformation does not modify the original data itself but instead provides a new perspective to better represent the data. 
 
 ## **Real-World Example of PCA in R**
-
-# 
 
 ### 1. Set Up
 
@@ -188,17 +190,107 @@ fviz_eig(res.pca, col.var="blue")
 
 On the basis of importance of components, is it visible that first two PCs have the highest vales for proportion of variance. This statement is also proved by eigenvalues measure. They are large for the first PCs and small for the subsequent PCs, which means that the first PCs corresponds to the directions with the maximum amount of variation in the data set. The sum of all the eigenvalues gives a total variance of 10. As far as scatter plot is concerned, first eigenvalue explain 41.24% of the variation, second - 18.385%. Therefore, 59.627% of the variation is explained by the first two eigenvalues together, which is a proper indicator for further analysis.
 
-# NEED TO WORK ON FROM HERE
+### 5. Selection of principal components
 
-### Step 4 - Selection of principal components
+PCA results can be assesed with regard to variables (sport disciplines) and individuals (athletes). Firstly, I will conduct extraction of results for variables. For that purpose get_pca_var() is used to provide a list of matrices containing all the results for the active variables (coordinates, correlation between variables and axes, squared cosine, and contributions).
 
-### Step 5 - Data transformation in new dimensional space
+```{r}
+#PCA results for variables
+var <- get_pca_var(res.pca)
+var
+```
 
-### 4. Apply PCA
+**Cos2** is called square cosine (squared coordinates) and corresponds to the quality of representation of variables. Cos2 of variables on all the dimensions using the *corrplot* package is displayed below, as well as bar plot of variables cos2 using the function fviz_cos2().
 
-### 5. Visualization of the principal components
+```{r}
+head(var$cos2)
+```
 
-\*Summary\*\*
+### 6. Data transformation in new dimensional space
+
+```{r}
+library("corrplot")
+corrplot(var$cos2, is.corr=FALSE)
+```
+
+```{r}
+fviz_cos2(res.pca, choice = "var", axes = 1:2)
+
+```
+
+Additionally, the quality of representation of variables can be draw on the factor map, where cos2 values differ by gradient colors. Variables with low cos2 values will be colored “darkorchid4”, medium cos2 values - “gold”, high co2 values - “darkorange”. Positively correlated variables are grouped together, whereas negatively correlated variables are positioned on opposite sides of the plot origin. The distance between variables and the origin measures the quality of the variables on the factor map. Variables that are away from the origin are well represented on the factor map.
+
+```{r}
+fviz_pca_var(res.pca,
+             col.var = "cos2", # Color by the quality of representation
+             gradient.cols = c("darkorchid4", "gold", "darkorange"),
+             repel = TRUE
+             )
+```
+
+X100m, Long.jump and Pole.vault have very high cos2, which implies a good representation of the variable on the principal component. In this case variables are positioned close to the circumference of the correlation circle. Javeline has the lowest cos2, which indicates that the variable is not perfectly represented by the PCs. In this case the variable is close to the center of the circle - it is less important for the first components.
+
+**Contrib** is a contribution of variables. The function fviz_contrib() is used to draw a bar plot of variable contributions for the most significant dimensions, therefore PC1 and PC2.
+
+```{r}
+# Contributions of variables to PC1
+a<-fviz_contrib(res.pca, choice = "var", axes = 1)
+# Contributions of variables to PC2
+b<-fviz_contrib(res.pca, choice = "var", axes = 2)
+grid.arrange(a,b, ncol=2, top='Contribution of the variables to the first two PCs')
+```
+
+The red dashed line on the graph above indicates the expected average contribution. For a certain component, a variable with a contribution exceeding this benchmark is considered as important in contributing to the component. It can be seen that the variables X100m, Long.jump and Pole.vault contribute the most to both dimensions.
+
+#### **PCA results for individuals**
+
+The results, for individuals (athletes) will be extracted using the function get_pca_ind(). Similarly to variables, it provides a list of matrices containing all the results for the individuals (coordinates, correlation between individuals and axes, squared cosine, and contributions). As for the individuals, the analysis will be focused on **cos2** and **contributions of individuals** to the first two principal components (PC1 and PC2).
+
+```{r}
+ind <- get_pca_ind(res.pca)
+ind
+
+```
+
+```{r}
+fviz_pca_ind(res.pca,
+             col.ind = "cos2", # Color by the quality of representation
+             gradient.cols = c("darkorchid4", "gold", "darkorange"),
+             repel = TRUE
+             )
+```
+
+```{r}
+# Total contribution on PC1 and PC2
+fviz_contrib(res.pca, choice = "ind", axes = 1:2)
+```
+
+Based on the position of the red dashed line (average contribution), individuals BOURGUIGNON, Karpov and Clay contribute the most to both dimensions.
+
+The summary of above PCA analysis for both variables (sport disciplines) and individuals (athletes) is displayed in a correlation plot (autoplot) from *ggfortify* package wirg reference to dimensions 1 and 2.
+
+```{r}
+autoplot(res.pca, loadings=TRUE, loadings.colour='darkorchid4', loadings.label=TRUE, loadings.label.size=3)
+
+```
+
+### **Final results and analysis**
+
+The purpose of this project is to distinguish which athletes obtained the best results among the whole group. So far, the Principal Component Analysis was conducted for both variables (sport disciplines) and individuals (athletes) with the use of prcomp() computation, eigenvalues extraction, square cosine and contributions. Considering the calculated PCs, I will summarize them in clusters via k-means clustering method. For that purpose, I will use eclust() function with 4 clusters as an assumption and autoplot() for 2D observations.
+
+```{r}
+kmeans<-eclust(decathlon2.active, k=4)
+
+```
+
+```{r}
+autoplot(res.pca, data=kmeans, colour="cluster")
+
+```
+
+Cluster which is the closest to the origin (blue) presents athletes with the best results in sport disciplines. Violet cluster shows the athletes with average results, wheres remaining clusters (green and red) correspond to the worst athletes.
+
+# Summary
 
 |                     |                          |
 |---------------------|--------------------------|
