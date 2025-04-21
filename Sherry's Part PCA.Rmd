@@ -13,6 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Dimensionality reduction is a foundational technique in data science, bioinformatics, and biological anthropology that transforms complex, high-dimensional datasets into simpler, lower-dimensional representations—**without losing the core structure or meaning of the data**. This is achieved by creating new variables (dimensions) that capture the most important variation from the original features.
 
+![](face pixel image.png){width="700"}
+
 It is not only a mathematical tool but also a **practical necessity** when working with multivariate data such as:
 
 -   Skeletal measurements
@@ -70,7 +72,7 @@ The main purpose of the project is to present and implement unsupervised learnin
 
 ## Why PCA?
 
-### ✅ **What it does well:**
+### **What it does well:**
 
 -   Captures the most variance with the fewest components
 
@@ -80,7 +82,7 @@ The main purpose of the project is to present and implement unsupervised learnin
 
 -   Quick and easy to run
 
-### ❌ **What it doesn't do:**
+### **What it doesn't do:**
 
 -   Doesn’t preserve **local relationships** (nearby points in high-D space may not stay close)
 
@@ -94,7 +96,7 @@ The main purpose of the project is to present and implement unsupervised learnin
 
 -   ﻿﻿More outliers in the data include experimental errors.
 
- ﻿﻿The data set from the PCA gives a great representation of the original data.
+﻿The data set from the PCA gives a great representation of the original data.
 
 ## How it works
 
@@ -126,7 +128,7 @@ It is important to remember that this transformation does not modify the origina
 
 ## **Real-World Example of PCA in R**
 
-#
+# 
 
 ### 1. Set Up
 
@@ -196,7 +198,7 @@ On the basis of importance of components, is it visible that first two PCs have 
 
 ### 5. Visualization of the principal components
 
-*Summary**
+\*Summary\*\*
 
 |                     |                          |
 |---------------------|--------------------------|
