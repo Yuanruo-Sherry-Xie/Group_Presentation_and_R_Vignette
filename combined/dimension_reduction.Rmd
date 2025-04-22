@@ -20,8 +20,7 @@ Dimensionality reduction is a foundational technique in data science, bioinforma
 
 ![**Fig 1.** Example of dimensional reduction in capturing image features. ([source](https://www.youtube.com/watch?v=jc1_yPYmspk&t=504s))](figure_1.png){width="700"}
 
-<br>
-Imagine every pixel in a photo is a separate question a computer must answer: *"How bright is the dot at row 37, column 212?"* A small, 64 × 64 gray‑scale picture already has 4,096 such questions (64 × 64 = 4,096). Each question is one dimension in the data.
+<br> Imagine every pixel in a photo is a separate question a computer must answer: *"How bright is the dot at row 37, column 212?"* A small, 64 × 64 gray‑scale picture already has 4,096 such questions (64 × 64 = 4,096). Each question is one dimension in the data.
 
 So, when a computer tries to tell two faces apart, it is really comparing **thousands of dimensions at once**—far more than we humans ever think about.
 
@@ -82,7 +81,7 @@ Below is a detailed rationale for **why and when dimensionality reduction is use
 
 The main purpose of the project is to present and implement unsupervised learning methods for **Principal Component Analysis (PCA)** - a statistical method to reduce dimensionality. PCA is used to extract significant information from a multivariate data table and to express this information as a set of few new variables called principal components. The goal of PCA is to identify directions that can be visualized graphically with minimal loss of information.
 
-![**Fig 2.**](figure_2.png){width="700"}
+![**Fig 2. PCA basis transformation ([source](https://www.youtube.com/watch?v=ne6vnKoTHwk&list=PLV8yxwGOxvvoJ87mFL27k7XSDq_lF3pD5&index=3))**](figure_2.png){width="700"}
 
 ## Why PCA?
 
@@ -102,10 +101,9 @@ The main purpose of the project is to present and implement unsupervised learnin
 
 -   Can miss **nonlinear structure** (like clusters in curved shapes)
 
-![**Fig 3.**](figure_3.png){width="700"}
+![**Fig 3. Nonlinear structure: kernel PCA ([source](https://www.youtube.com/watch?v=ne6vnKoTHwk&list=PLV8yxwGOxvvoJ87mFL27k7XSDq_lF3pD5&index=3))**](figure_3.png){width="700"}
 
-<br>
-**The following assumptions are made by the principal component analysis:**
+<br> **The following assumptions are made by the principal component analysis:**
 
 -   There is a linear combination between variables.
 
@@ -117,8 +115,7 @@ The main purpose of the project is to present and implement unsupervised learnin
 
 ## How it works
 
-![**Fig 4.**
-([Source](https://www.datacamp.com/tutorial/pca-analysis-r))](https://media.datacamp.com/legacy/image/upload/v1676290161/5_main_steps_for_computing_principal_components_7aa5efa2ad.png){width="700"}
+![**Fig 4.** ([Source](https://www.datacamp.com/tutorial/pca-analysis-r))](https://media.datacamp.com/legacy/image/upload/v1676290161/5_main_steps_for_computing_principal_components_7aa5efa2ad.png){width="700"}
 
 ### Step 1 - Data normalization
 
@@ -158,7 +155,7 @@ library("corrplot")
 
 ### 2. Explore Data
 
-Now it is possible to load demo dataset *decathlon2* from the *factoextra* package. The data describes athletes’ performance during two sporting events (Desctar and OlympicG). It contains 27 individuals (athletes) described by 13 variables (sport disciplines). For further analysis, I will subset active individuals (rows 1:23) and active variables (columns 1:10) from *decathlon2* dataset, therefore I will create new dataset *decathlon2.active* to conduct the principal component analysis. *Decathlon2.active* dataset consists of 23 observations and 10 variables (presented below).
+Now it is possible to load demo dataset *decathlon2* from the *factoextra* package. The data describes athletes’ performance during two sporting events (Desctar and OlympicG). It contains 27 individuals (athletes) described by 13 variables (sport disciplines). For further analysis, we will subset active individuals (rows 1:23) and active variables (columns 1:10) from *decathlon2* dataset, therefore we will create new dataset *decathlon2.active* to conduct the principal component analysis. *Decathlon2.active* dataset consists of 23 observations and 10 variables (presented below).
 
 ```{r}
 data(decathlon2)
@@ -176,7 +173,7 @@ summary(decathlon2.active)
 
 ### 3. Normalize data and covariance matrix
 
-The first step of the analysis is focused around computation of PCA using prcomp() function. This command allows for: centering data around 0 by shifting the variables; rescaling the variance to 1 unit; data standarization needed due to the fact that variables are measured in different scales. Additionally, the eigenvalues are extracted by get_eigenvalue() function. Eigenvalues measure the amount of variation held by each principal component (PC). They are evaluated to determine the number of principal components to be considered.
+The first step of the analysis is focused around computation of PCA using prcomp() function. This command allows for: centering data around 0 by shifting the variables; rescaling the variance to 1 unit; data standarization needed due to the fact that variables are measured in different scales.
 
 ```{r}
 res.pca <- prcomp(decathlon2.active, scale = TRUE)
@@ -189,6 +186,8 @@ summary(res.pca)
 ```
 
 ### 4. Eigenvectors and eigenvalues
+
+Additionally, the eigenvalues are extracted by get_eigenvalue() function. Eigenvalues measure the amount of variation held by each principal component (PC). They are evaluated to determine the number of principal components to be considered.
 
 ```{r}
 eig.val <- get_eigenvalue(res.pca)
@@ -204,7 +203,7 @@ On the basis of importance of components, is it visible that first two PCs have 
 
 ### 5. Selection of principal components
 
-PCA results can be assesed with regard to variables (sport disciplines) and individuals (athletes). Firstly, I will conduct extraction of results for variables. For that purpose get_pca_var() is used to provide a list of matrices containing all the results for the active variables (coordinates, correlation between variables and axes, squared cosine, and contributions).
+PCA results can be assesed with regard to variables (sport disciplines) and individuals (athletes). Firstly, we will conduct extraction of results for variables. For that purpose get_pca_var() is used to provide a list of matrices containing all the results for the active variables (coordinates, correlation between variables and axes, squared cosine, and contributions).
 
 ```{r}
 # PCA results for variables
@@ -288,7 +287,7 @@ autoplot(res.pca, loadings=TRUE, loadings.colour='darkorchid4', loadings.label=T
 
 ### Final results and analysis
 
-The purpose of this project is to distinguish which athletes obtained the best results among the whole group. So far, the Principal Component Analysis was conducted for both variables (sport disciplines) and individuals (athletes) with the use of prcomp() computation, eigenvalues extraction, square cosine and contributions. Considering the calculated PCs, I will summarize them in clusters via k-means clustering method. For that purpose, I will use eclust() function with 4 clusters as an assumption and autoplot() for 2D observations.
+The purpose of this project is to distinguish which athletes obtained the best results among the whole group. So far, the Principal Component Analysis was conducted for both variables (sport disciplines) and individuals (athletes) with the use of prcomp() computation, eigenvalues extraction, square cosine and contributions. Considering the calculated PCs, we will summarize them in clusters via k-means clustering method. For that purpose, I will use eclust() function with 4 clusters as an assumption and autoplot() for 2D observations.
 
 ```{r}
 kmeans<-eclust(decathlon2.active, k=4)
@@ -581,12 +580,11 @@ ggplot(tsne_cereals_num, aes(
 
 ## Overview
 
-UMAP (Uniform Manifold Approximation and Projection) is a nonlinear dimension reduction technique that finds meaningful structure in high-dimensional data by combining ideas from manifold learning and topology.  
+UMAP (Uniform Manifold Approximation and Projection) is a nonlinear dimension reduction technique that finds meaningful structure in high-dimensional data by combining ideas from manifold learning and topology.
 
 ![**Fig 4.** Example of manifold. Here is a great [YouTube Video](https://www.youtube.com/watch?v=jc1_yPYmspk&list=PLV8yxwGOxvvoJ87mFL27k7XSDq_lF3pD5&index=1) for more background on dimension reduction.](figure_4.png){width="700"}
 
-<br>
-After projecting these high dimensional data to the manifold, UMAP use the simplices complex to connect them and we can use the the weight of the edges to calculate how connected each of them are. At the end we use a low dimensional graph (2D or 3D) that preserves the high dimensional information.
+<br> After projecting these high dimensional data to the manifold, UMAP use the simplices complex to connect them and we can use the the weight of the edges to calculate how connected each of them are. At the end we use a low dimensional graph (2D or 3D) that preserves the high dimensional information.
 
 ![**Fig 5.** Example of simplices complex. ([source](https://pair-code.github.io/understanding-umap/))](figure_5.png){width="700"}
 
@@ -594,39 +592,37 @@ After projecting these high dimensional data to the manifold, UMAP use the simpl
 
 UMAP consists of three main steps to perform dimension reduction.
 
-1. **Capturing Local Relationships:**  
-   UMAP begins by analyzing each data point to identify its nearest neighbors in the high-dimensional space. This process builds a neighborhood graph that represents the local structure. Essentially, it captures who is close to whom.
+1.  **Capturing Local Relationships:**\
+    UMAP begins by analyzing each data point to identify its nearest neighbors in the high-dimensional space. This process builds a neighborhood graph that represents the local structure. Essentially, it captures who is close to whom.
 
-2. **Creating a Fuzzy Topological Representation:**  
+2.  **Creating a Fuzzy Topological Representation:**\
     UMAP assigns a probability (from 0 to 1) to each connection. This creates what’s known as a fuzzy simplicial set that captures both the local and some global structures of the data. The Fuzzy graph is like a representation of the weighted graph and each wedge has a "weight" that represents how likely the two points are connected.
 
- 
-3. **Optimizing the Low-dimensional Embedding:**  
-   UMAP then try to find a lower-dimensional space where these fuzzy relationships are best preserved. An optimization algorithm minimizes the difference between the high-dimensional fuzzy relationships and the layout in the low-dimensional space.
-   
+3.  **Optimizing the Low-dimensional Embedding:**\
+    UMAP then try to find a lower-dimensional space where these fuzzy relationships are best preserved. An optimization algorithm minimizes the difference between the high-dimensional fuzzy relationships and the layout in the low-dimensional space.
+
 ### Hyperparameters
 
 UMAP provides several hyperparameters that help balance the preservation of local versus global structures.
 
-- `n_neighbors`:  
-  - This parameter defines the number of nearest neighbors considered for each point when constructing the high-dimensional graph.
-  - **Low values** focus the method on local structure (resulting in tighter, more isolated clusters).
-  - **High values** allow the method to incorporate more global structure at the expense of local details.
-
-- `min_dist`:  
-  - This parameter controls how close points are allowed to get in the low-dimensional display.
-  - **Smaller values** lead to tighter clustering, which can highlight fine local structure.
-  - **Larger values** spread out the points, preserving broader topological relationships between clusters.
+-   `n_neighbors`:
+    -   This parameter defines the number of nearest neighbors considered for each point when constructing the high-dimensional graph.
+    -   **Low values** focus the method on local structure (resulting in tighter, more isolated clusters).
+    -   **High values** allow the method to incorporate more global structure at the expense of local details.
+-   `min_dist`:
+    -   This parameter controls how close points are allowed to get in the low-dimensional display.
+    -   **Smaller values** lead to tighter clustering, which can highlight fine local structure.
+    -   **Larger values** spread out the points, preserving broader topological relationships between clusters.
 
 By adjusting these parameters, UMAP can be fine-tuned for different types of data and different visualization needs.
 
 ### Compared with t-SNE
 
 Both UMAP and t-SNE are designed to preserve local structure, but they have different characteristics.
-   
-- **t-SNE:** Focuses strongly on local relationships and can produce very clear clusters, but sometimes struggles with representing the global structure and requires more computational effort for large data sets.
 
-- **UMAP:** Often preserves both local and global structures better, scales well to larger data sets, and tends to run faster than t-SNE.
+-   **t-SNE:** Focuses strongly on local relationships and can produce very clear clusters, but sometimes struggles with representing the global structure and requires more computational effort for large data sets.
+
+-   **UMAP:** Often preserves both local and global structures better, scales well to larger data sets, and tends to run faster than t-SNE.
 
 These principles make UMAP a powerful tool not only for image data but also for other types of high-dimensional data.
 
@@ -634,11 +630,11 @@ These principles make UMAP a powerful tool not only for image data but also for 
 
 Here are some great sources for anyone interested in UMAP:
 
-- McInnes, L., Healy, J., & Melville, J. (2018). [UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction](https://arxiv.org/abs/1802.03426).
+-   McInnes, L., Healy, J., & Melville, J. (2018). [UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction](https://arxiv.org/abs/1802.03426).
 
-- The [UMAP documentation](https://umap-learn.readthedocs.io/en/latest/) provides detailed examples and additional resources.
+-   The [UMAP documentation](https://umap-learn.readthedocs.io/en/latest/) provides detailed examples and additional resources.
 
-- The [Fuzzy complex](https://pair-code.github.io/understanding-umap/).
+-   The [Fuzzy complex](https://pair-code.github.io/understanding-umap/).
 
 ## Real Data Application
 
@@ -648,11 +644,11 @@ Recognizing handwritten digits was one of the first victories for computer visio
 
 We will use the MNIST data set from [a Kaggle competition](https://www.kaggle.com/competitions/digit-recognizer/overview), which consists of 28×28 pixel images of handwritten digits. Each image is represented by 784 dimensions (one for each pixel). In each dimension, there is a gray scale values which are integer from 0 (black) to 255 (white). Our goal is to reduce this high-dimensional data to a lower-dimensional space using UMAP. By doing so, we aim to:
 
-1. **Simplify the feature space:** Reduce from 784 columns down to 2 or 3 dimensions.
+1.  **Simplify the feature space:** Reduce from 784 columns down to 2 or 3 dimensions.
 
-2. **Visualize underlying structure:** See how digits cluster together based on their inherent similarities.
+2.  **Visualize underlying structure:** See how digits cluster together based on their inherent similarities.
 
-3. **Preserve the ability to distinguish digits:** Ensure that even after dimensional reduction, the clusters remain well separated, allowing us to identify each digit.
+3.  **Preserve the ability to distinguish digits:** Ensure that even after dimensional reduction, the clusters remain well separated, allowing us to identify each digit.
 
 ![**Fig 6.** Examples of MNIST data in 784 pixels.](figure_6.png){width="700"}
 
@@ -806,10 +802,8 @@ UMAP is not only a powerful tool for image data. Tt is also extremely important 
 
 ![**Fig 7.** Example of cell count matrix.](figure_7.png){width="350"}
 
-<br>
-By applying UMAP to single-cell RNA sequencing data, biologists can reduce the dimensionality of the data to 2 or 3 dimensions. This allows them to visualize and identify clusters of cells that correspond to different cell types. In effect, UMAP helps to annotate and classify cells based on their gene expression patterns, enabling a deeper understanding of cellular diversity and function.
+<br> By applying UMAP to single-cell RNA sequencing data, biologists can reduce the dimensionality of the data to 2 or 3 dimensions. This allows them to visualize and identify clusters of cells that correspond to different cell types. In effect, UMAP helps to annotate and classify cells based on their gene expression patterns, enabling a deeper understanding of cellular diversity and function.
 
 ![**Fig 8.** Example of cell typing. ([source](https://datascienceforbio.com/scanpy-umap-dotplot-and-heatmap/))](figure_8.png){width="700"}
 
-<br>
-Ultimately, whether you’re working with images or gene expression data, UMAP provides a versatile and powerful means to condense high-dimensional large data sets into meaningful visuals in a time-efficient manner.
+<br> Ultimately, whether you’re working with images or gene expression data, UMAP provides a versatile and powerful means to condense high-dimensional large data sets into meaningful visuals in a time-efficient manner.
